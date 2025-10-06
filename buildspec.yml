@@ -1,0 +1,23 @@
+version: 0.0
+
+phases:
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 629400601463.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -t fastapi_docker .
+      - docker tag fastapi_docker:latest 629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api
+
+   post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - docker push 629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api
+      - printf '[{"name":"fast-api","imageUri":"%s"}]' 629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api > imagedefinitions.json
+
+   artifacts:
+     files:
+      - imagedefinitions.json
