@@ -1,5 +1,4 @@
 version: 0.2
-
 phases:
 
   pre_build:
@@ -11,13 +10,13 @@ phases:
       - echo Building Docker image...
       - docker build -t fastapi_docker .
       - docker tag fastapi_docker:latest 629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api
-
-   post_build:
+      
+  post_build:
     commands:
       - echo Pushing the Docker image...
       - docker push 629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api
       - printf '[{"name":"fast-api","imageUri":"%s"}]' 629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api > imagedefinitions.json
      # - printf '[{"name":"fast-api","imageUri":"629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api:latest"}]' > imagedefinitions.json
-   artifacts:
+  artifacts:
      files:
       - imagedefinitions.json
