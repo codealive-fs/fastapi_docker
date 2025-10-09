@@ -14,7 +14,7 @@ phases:
   post_build:
     commands:
       - echo Pushing the Docker image...
-      - docker push 629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api
+      - docker push 629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api:latest
       - printf '[{"name":"fast-api","imageUri":"%s"}]' 629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api > imagedefinitions.json
      # - printf '[{"name":"fast-api","imageUri":"629400601463.dkr.ecr.us-east-1.amazonaws.com/fast-api:latest"}]' > imagedefinitions.json
   # artifacts:
